@@ -1,4 +1,4 @@
-package com.swidy.result;
+package com.swidy.miaosha.result;
 
 
 public class CodeMsg {
@@ -10,6 +10,12 @@ public class CodeMsg {
 	public static CodeMsg SUCCESS = new CodeMsg(0,"success");
 	public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务器端异常");
 	//登录模块 5002XX
+	public static CodeMsg MOBILE_EMPTY = new CodeMsg(500200,"手机号码不能为空");
+	public static CodeMsg PASSWORD_EMPTY = new CodeMsg(500201,"密码不能为空");
+	public static CodeMsg MOBILE_ERROR = new CodeMsg(500202,"手机号码格式错误");
+	public static CodeMsg MOBILE_NOT_EXIST= new CodeMsg(500202,"手机号码不存在");
+	public static CodeMsg PASSWORD_ERROR = new CodeMsg(500203,"密码错误");
+	
 	
 	//商品模块 5003XX
 	

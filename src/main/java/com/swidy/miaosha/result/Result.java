@@ -1,4 +1,4 @@
-package com.swidy.result;
+package com.swidy.miaosha.result;
 
 public class Result<T> {
 	

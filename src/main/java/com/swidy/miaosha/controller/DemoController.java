@@ -5,8 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.swidy.result.CodeMsg;
-import com.swidy.result.Result;
+import com.swidy.miaosha.result.CodeMsg;
+import com.swidy.miaosha.result.Result;
 
 @Controller
 @RequestMapping("/demo")
