@@ -2,9 +2,12 @@ package com.swidy.miaosha.vo;
 
 import javax.validation.constraints.NotNull;
 
+import com.swidy.miaosha.validator.IsMobile;
+
 public class LoginVo {
 	
 	@NotNull
+	@IsMobile
 	private String mobile;
 	
 	@NotNull

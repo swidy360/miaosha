@@ -30,6 +30,7 @@ public class LoginController {
 	@RequestMapping("do_login")
 	@ResponseBody
 	public Result<Boolean> doLogin(@Valid LoginVo loginVo){
-		return userService.login(loginVo);
+		userService.login(loginVo);
+		return Result.success(true);
 	}
 }
