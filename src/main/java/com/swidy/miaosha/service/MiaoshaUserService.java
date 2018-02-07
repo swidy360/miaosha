@@ -8,7 +8,6 @@ import com.swidy.miaosha.dao.MiaoshaUserDao;
 import com.swidy.miaosha.domain.MiaoshaUser;
 import com.swidy.miaosha.exception.GlobalException;
 import com.swidy.miaosha.result.CodeMsg;
-import com.swidy.miaosha.result.Result;
 import com.swidy.miaosha.util.MD5Util;
 import com.swidy.miaosha.vo.LoginVo;
 
