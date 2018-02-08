@@ -1,5 +1,6 @@
 package com.swidy.miaosha.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class LoginController {
 
 	@RequestMapping("do_login")
 	@ResponseBody
-	public Result<Boolean> doLogin(@Valid LoginVo loginVo){
-		userService.login(loginVo);
+	public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
+		userService.login(response, loginVo);
 		return Result.success(true);
 	}
 }
