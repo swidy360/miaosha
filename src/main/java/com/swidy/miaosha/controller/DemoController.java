@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.swidy.miaosha.domain.User;
 import com.swidy.miaosha.redis.RedisService;
+import com.swidy.miaosha.redis.UserKey;
 import com.swidy.miaosha.result.CodeMsg;
 import com.swidy.miaosha.result.Result;
 
@@ -48,14 +49,14 @@ public class DemoController {
 		User user = new User();
 		user.setId("1");
 		user.setName("swidy360");
-		redisService.set("user1:", user);
+		redisService.set(UserKey.getById,"1", user);
 		return Result.success(true);
 	}
 	
 	@RequestMapping("/get_redis")
 	@ResponseBody
 	public Result<User> getRedis(){
-		User user = redisService.get("user1:", User.class);
+		User user = redisService.get(UserKey.getById,"1", User.class);
 		return Result.success(user);
 	}
 	
