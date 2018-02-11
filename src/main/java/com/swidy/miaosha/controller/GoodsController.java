@@ -21,7 +21,9 @@ import com.alibaba.druid.util.StringUtils;
 import com.swidy.miaosha.domain.MiaoshaUser;
 import com.swidy.miaosha.redis.GoodsKey;
 import com.swidy.miaosha.redis.RedisService;
+import com.swidy.miaosha.result.Result;
 import com.swidy.miaosha.service.GoodsService;
+import com.swidy.miaosha.vo.GoodsDetailVo;
 import com.swidy.miaosha.vo.GoodsVo;
 
 @Controller
@@ -48,7 +50,7 @@ public class GoodsController {
 		return "goods_list";
 	}
 	
-	@RequestMapping("/to_list")
+	@RequestMapping(value="/to_list", produces="text/html")
 	@ResponseBody
 	public String list(HttpServletRequest request, HttpServletResponse response, Model model,MiaoshaUser user){
 		model.addAttribute("user", user);
@@ -73,20 +75,11 @@ public class GoodsController {
 		return html;
 	}
 	
-	@RequestMapping("/to_detail/{goodsId}")
+	@RequestMapping("/detail/{goodsId}")
 	@ResponseBody
-	public String detail(HttpServletRequest request, HttpServletResponse response, Model model,MiaoshaUser user,@PathVariable("goodsId")Long goodsId){
-		model.addAttribute("user", user);
-		//取缓存
-		String html = redisService.get(GoodsKey.getGoodDetail, ""+goodsId, String.class);
-		if(!StringUtils.isEmpty(html)){
-			logger.info("取商品详情页缓存");
-			return html;
-		}
-				
+	public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model,
+			MiaoshaUser user,@PathVariable("goodsId")long goodsId){
 		GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
-		model.addAttribute("goods", goods);
-		
 		long startAt = goods.getStartDate().getTime();
 		long endAt = goods.getEndDate().getTime();
 		long now = System.currentTimeMillis();
@@ -101,22 +94,17 @@ public class GoodsController {
 		}else{ //秒杀正在进行中
 			miaoshaStatus = 1;
 			remainSeconds = 0;
-		}
-		model.addAttribute("remainSeconds", remainSeconds);
-		model.addAttribute("miaoshaStatus", miaoshaStatus);
-		SpringWebContext ctx = new SpringWebContext(
-				request, response, request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
-		//手动渲染
-		html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", ctx);
-		if(!StringUtils.isEmpty(html)){
-			redisService.set(GoodsKey.getGoodDetail, ""+goodsId, html);
-		}
-		logger.info("取商品详情页数据库");
-		return html;
+		} 
+		GoodsDetailVo vo = new GoodsDetailVo();
+		vo.setGoods(goods);
+		vo.setUser(user);
+		vo.setMiaoshaStatus(miaoshaStatus);
+		vo.setRemainSeconds(remainSeconds);
+		return Result.success(vo);
 	}
 	
-	@RequestMapping("/to_detail2/{goodsId}")
-	public String detail2(Model model,MiaoshaUser user,@PathVariable("goodsId")Long goodsId){
+	@RequestMapping(value="/to_detail2/{goodsId}", produces="text/html")
+	public String detail2(Model model,MiaoshaUser user,@PathVariable("goodsId")long goodsId){
 		model.addAttribute("user", user);
 		GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
 		model.addAttribute("goods", goods);

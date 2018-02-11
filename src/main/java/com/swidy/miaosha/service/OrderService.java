@@ -9,6 +9,8 @@ import com.swidy.miaosha.dao.OrderDao;
 import com.swidy.miaosha.domain.MiaoshaOrder;
 import com.swidy.miaosha.domain.MiaoshaUser;
 import com.swidy.miaosha.domain.OrderInfo;
+import com.swidy.miaosha.redis.OrderKey;
+import com.swidy.miaosha.redis.RedisService;
 import com.swidy.miaosha.vo.GoodsVo;
 
 @Service
@@ -16,9 +18,12 @@ public class OrderService {
 
 	@Autowired
 	OrderDao orderDao;
+	@Autowired
+	RedisService redisServices;
 	
 	public MiaoshaOrder getMiaoshaOrderByGoodsIdUserId(Long goodsId, Long userId){
-		return orderDao.getMiaoshaOrderByGoodsIdUserId(goodsId, userId);
+//		return orderDao.getMiaoshaOrderByGoodsIdUserId(goodsId, userId);
+		return redisServices.get(OrderKey.getMiaoshaOrderByUidGid, ""+userId+"_"+goodsId, MiaoshaOrder.class);
 	}
 
 	public OrderInfo createOrder(GoodsVo goods, MiaoshaUser user) {
@@ -38,6 +43,12 @@ public class OrderService {
 		miaoshaOrder.setOrderId(orderId);
 		miaoshaOrder.setUserId(user.getId());
 		orderDao.insertMiaoshaOrder(miaoshaOrder);
+		
+		redisServices.set(OrderKey.getMiaoshaOrderByUidGid, ""+user.getId()+"_"+goods.getId(), miaoshaOrder);
 		return orderInfo;
+	}
+
+	public OrderInfo getOrderById(long orderId) {
+		return orderDao.getOrderById(orderId);
 	}
 }

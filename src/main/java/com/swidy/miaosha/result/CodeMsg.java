@@ -1,5 +1,6 @@
 package com.swidy.miaosha.result;
 
+
 public class CodeMsg {
 	
 	private int code;
@@ -10,6 +11,7 @@ public class CodeMsg {
 	public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务器端异常");
 	public static CodeMsg BIND_ERROR = new CodeMsg(500101, "参数校验异常：%s");
 	//登录模块 5002XX
+	public static CodeMsg SESSION_ERROR = new CodeMsg(500210, "Session不存在或者已经失效");
 	public static CodeMsg MOBILE_EMPTY = new CodeMsg(500200,"手机号码不能为空");
 	public static CodeMsg PASSWORD_EMPTY = new CodeMsg(500201,"密码不能为空");
 	public static CodeMsg MOBILE_ERROR = new CodeMsg(500202,"手机号码格式错误");
@@ -20,6 +22,7 @@ public class CodeMsg {
 	//商品模块 5003XX
 	
 	//订单模块 5004XX
+	public static CodeMsg ORDER_NOT_EXIST = new CodeMsg(500400,"订单不存在");
 	
 	//秒杀模块 5005XX
 	public static CodeMsg MIAO_SHA_OVER = new CodeMsg(500500, "商品已经秒杀完毕");
