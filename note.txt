@@ -8,4 +8,5 @@ V6:增加KeyPrefix前缀
 V7:增加分布式Session
 V8:增加秒杀商品列表和秒杀商品详情页
 V9:增加秒杀订单业务逻辑
-V10:修改pom.xml，打war包
+V10:修改pom.xml生成war包
+V11:增加页面缓存和URL缓存
