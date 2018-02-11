@@ -70,7 +70,7 @@ public class MiaoshaUserService {
 		}
 		MiaoshaUser user = redisService.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
 		if(user != null) {
-			addCookie(response, token, user);
+			addCookie(response, token, user); 
 		}
 		return user;
 	}
