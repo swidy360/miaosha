@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.swidy.miaosha.domain.User;
+import com.swidy.miaosha.rabbitmq.MQSender;
 import com.swidy.miaosha.redis.RedisService;
 import com.swidy.miaosha.redis.UserKey;
 import com.swidy.miaosha.result.CodeMsg;
@@ -18,6 +19,37 @@ public class DemoController {
 	
 	@Autowired
 	RedisService redisService;
+	
+	@Autowired
+	MQSender sender;
+	
+	@RequestMapping("/mq")
+	@ResponseBody
+	public String queue(){
+		sender.send("hello world");
+		return "hello world";
+	}
+	
+	@RequestMapping("/mq/topic")
+	@ResponseBody
+	public String topic(){
+		sender.topicSend("hello topic world");
+		return "hello topic world";
+	}
+	
+	@RequestMapping("/mq/fanout")
+	@ResponseBody
+	public String fanout(){
+		sender.fanoutSend("hello fanout world");
+		return "hello fanout world";
+	}
+	
+	@RequestMapping("/mq/header")
+	@ResponseBody
+	public String header(){
+		sender.headerSend("hello header world");
+		return "hello header world";
+	}
 	
 	@RequestMapping("/")
 	@ResponseBody
