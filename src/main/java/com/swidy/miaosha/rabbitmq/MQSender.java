@@ -18,6 +18,12 @@ public class MQSender {
 	@Autowired
 	AmqpTemplate amqpTemplate;
 	
+	public void sendMiaoshaMessage(MiaoshaMessage message){
+		String msg = RedisService.beanToString(message);
+		logger.info("send miaosha message:" + msg);
+		amqpTemplate.convertAndSend(MQConfig.MIAOSHA_QUEUE, msg);
+	}
+	
 	public void send(Object message){
 		String msg = RedisService.beanToString(message);
 		logger.info("send message:" + msg);

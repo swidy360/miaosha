@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MQConfig {
 
+	public static final String MIAOSHA_QUEUE = "miaosha_queue";
 	public static final String QUEUE = "queue";
 	public static final String TOPIC_QUEUE1 = "topic.queue1";
 	public static final String TOPIC_QUEUE2 = "topic.queue2";
@@ -22,6 +23,14 @@ public class MQConfig {
 	public static final String TOPIC_EXCHANGE = "topicExchange";
 	public static final String FANOUT_EXCHANGE = "fanoutExchange";
 	public static final String HEADERS_EXCHANGE = "headersExchange";
+	
+	/**
+	 * Direct模式 交换机Exchange
+	 * */
+	@Bean
+	public Queue miaoshaQueue(){
+		return new Queue(MIAOSHA_QUEUE,true);
+	}
 	
 	/**
 	 * Direct模式 交换机Exchange
