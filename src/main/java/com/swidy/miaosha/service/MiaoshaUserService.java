@@ -64,7 +64,7 @@ public class MiaoshaUserService {
 		response.addCookie(cookie);
 	}
 
-	public Object getByToken(HttpServletResponse response, String token) {
+	public MiaoshaUser getByToken(HttpServletResponse response, String token) {
 		if(StringUtils.isEmpty(token)) {
 			return null;
 		}

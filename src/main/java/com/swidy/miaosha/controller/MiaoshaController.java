@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.swidy.miaosha.access.AccessLimit;
 import com.swidy.miaosha.domain.MiaoshaOrder;
 import com.swidy.miaosha.domain.MiaoshaUser;
 import com.swidy.miaosha.rabbitmq.MQSender;
@@ -124,10 +125,11 @@ public class MiaoshaController implements InitializingBean{
 		return Result.success(result);
 	}
 	
+	@AccessLimit(seconds=5, maxCount=5, needLogin=true)
 	@RequestMapping(value="/path", method=RequestMethod.GET)
 	@ResponseBody
 	public Result<String> getMiaoshaPath(MiaoshaUser user, @RequestParam("goodsId")long goodsId, 
-			@RequestParam(value="verifyCode", defaultValue="0")int verifyCode){
+			@RequestParam(value="verifyCode", defaultValue="0")String verifyCode){
 		if(user == null){
 			return Result.error(CodeMsg.SESSION_ERROR);
 		}

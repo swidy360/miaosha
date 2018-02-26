@@ -152,14 +152,14 @@ public class MiaoshaService {
 		return exp;
 	}
 
-	public boolean checkVerifyCode(MiaoshaUser user, long goodsId, int verifyCode) {
+	public boolean checkVerifyCode(MiaoshaUser user, long goodsId, String verifyCode) {
 		if(user == null || goodsId <= 0){
 			return false;
 		}
-		Integer codeOld = Integer.valueOf(redisService.get(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId, String.class));
-		if(codeOld == null || codeOld - verifyCode != 0){
+		String codeOld = redisService.get(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId, String.class);
+		if(codeOld == null || !StringUtils.equals(codeOld, verifyCode)){
 			return false;
-		}
+		} 
 		redisService.delete(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId);
 		return true;
 	}

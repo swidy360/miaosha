@@ -202,5 +202,4 @@ public class RedisService {
 			return JSON.toJSONString(value);
 		} 
 	}
-
 }
