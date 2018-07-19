@@ -24,6 +24,11 @@ public class LoginController {
 		return "login";
 	}
 
+	@RequestMapping("to_resume")
+	public String toResume(){
+		return "resume";
+	}
+	
 	@RequestMapping("do_login")
 	@ResponseBody
 	public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
